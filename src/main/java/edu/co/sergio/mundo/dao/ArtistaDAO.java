@@ -34,7 +34,7 @@ public class ArtistaDAO implements IBaseDatos<Artista> {
 	 */
 	public List<Artista> findAll() {
 		List<Artista> artista= null;
-	    String query = "SELECT * FROM Depto";
+	    String query = "SELECT * FROM artista";
 	    Connection connection = null;
             try {
                 connection = Conexion.getConnection();
