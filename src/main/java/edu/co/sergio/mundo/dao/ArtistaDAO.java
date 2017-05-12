@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import edu.co.sergio.mundo.vo.Departamento;
+import edu.co.sergio.mundo.vo.Artista;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
  
 
-public class ArtistaDAO implements IBaseDatos<Departamento> {
+public class ArtistaDAO implements IBaseDatos<Artista> {
 
 	/**
 	 * Funcion que permite obtener una lista de los departamentos existentes en la base de datos
@@ -49,15 +49,15 @@ public class ArtistaDAO implements IBaseDatos<Departamento> {
 	
 	    while (rs.next()){
 	    	if(artista == null){
-	    		artsita= new ArrayList<Artista>();
+	    		artista= new ArrayList<Artista>();
 	    	}
 	      
 	        Artista registro= new Artista();
 	        id = rs.getInt("artista_id");
-	        registro.setId_artista(id);
+	        registro.setId(id);
 	        
 	        nombre = rs.getString("artista_nombre");
-	        registro.setNom_artista(nombre) ;
+	        registro.setNombre(nombre) ;
 	        
 	        artista.add(registro);
 	    }
@@ -68,7 +68,7 @@ public class ArtistaDAO implements IBaseDatos<Departamento> {
 			e.printStackTrace();
 		}
 	    
-	    return departamentos;
+	    return artista;
 	}
 
 	
@@ -85,12 +85,19 @@ public class ArtistaDAO implements IBaseDatos<Departamento> {
             } catch (URISyntaxException ex) {
                 Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-	    String query = " insert into Artista (id_depto,nom_depto)"  + " values (?,?)";
+	    String query = " insert into Artista (artista_id,artista_usuario,artista_nombre,artista_apellido,artista_origen,artista_curriculum,artista_distincion,artista_domicialiado)"  + " values (?,?)";
         PreparedStatement preparedStmt=null;
 	    try {
 			preparedStmt = connection.prepareStatement(query);
-			preparedStmt.setInt (1, t.getId_departamento());
-                        preparedStmt.setString (2, t.getNom_departamento());
+			preparedStmt.setInt (1, t.getId());
+                        preparedStmt.setString (2, t.getUsuario());
+                        preparedStmt.setString (3, t.getNombre());
+                        preparedStmt.setString (4, t.getApellido());
+                        preparedStmt.setString (5, t.getOrigen());
+                        preparedStmt.setString (6, t.getCurriculum());
+                        preparedStmt.setString (7, t.getDistincion());
+                        preparedStmt.setString (8, t.getUsuario());
+                        preparedStmt.setString (9, t.getDomicialiado());
 			result= preparedStmt.execute();
 	    } catch (SQLException e) {
 			e.printStackTrace();
