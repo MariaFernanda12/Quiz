@@ -26,20 +26,20 @@ import java.util.logging.Logger;
  */
  
 
-public class DepartamentoDAO implements IBaseDatos<Departamento> {
+public class ArtistaDAO implements IBaseDatos<Departamento> {
 
 	/**
 	 * Funcion que permite obtener una lista de los departamentos existentes en la base de datos
 	 * @return List<Departamento> Retorna la lista de Departamentos existentes en la base de datos
 	 */
-	public List<Departamento> findAll() {
-		List<Departamento> departamentos= null;
+	public List<Artista> findAll() {
+		List<Artista> artista= null;
 	    String query = "SELECT * FROM Depto";
 	    Connection connection = null;
             try {
                 connection = Conexion.getConnection();
             } catch (URISyntaxException ex) {
-                Logger.getLogger(DepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
 	    try {
 	    Statement st = connection.createStatement();
@@ -48,18 +48,18 @@ public class DepartamentoDAO implements IBaseDatos<Departamento> {
 	    String nombre = null;
 	
 	    while (rs.next()){
-	    	if(departamentos == null){
-	    		departamentos= new ArrayList<Departamento>();
+	    	if(artista == null){
+	    		artsita= new ArrayList<Artista>();
 	    	}
 	      
-	        Departamento registro= new Departamento();
-	        id = rs.getInt("id_depto");
-	        registro.setId_departamento(id);
+	        Artista registro= new Artista();
+	        id = rs.getInt("artista_id");
+	        registro.setId_artista(id);
 	        
-	        nombre = rs.getString("nom_depto");
-	        registro.setNom_departamento(nombre) ;
+	        nombre = rs.getString("artista_nombre");
+	        registro.setNom_artista(nombre) ;
 	        
-	        departamentos.add(registro);
+	        artista.add(registro);
 	    }
 	    st.close();
 	    
@@ -77,15 +77,15 @@ public class DepartamentoDAO implements IBaseDatos<Departamento> {
 	 * @param Departamento recibe un objeto de tipo Departamento 
 	 * @return boolean retorna true si la operacion de insercion es exitosa.
 	 */
-	public boolean insert(Departamento t) {
+	public boolean insert(Artista t) {
 		boolean result=false;
 		Connection connection=null;
             try {
                 connection = Conexion.getConnection();
             } catch (URISyntaxException ex) {
-                Logger.getLogger(DepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-	    String query = " insert into Depto (id_depto,nom_depto)"  + " values (?,?)";
+	    String query = " insert into Artista (id_depto,nom_depto)"  + " values (?,?)";
         PreparedStatement preparedStmt=null;
 	    try {
 			preparedStmt = connection.prepareStatement(query);
@@ -103,54 +103,5 @@ public class DepartamentoDAO implements IBaseDatos<Departamento> {
 	 * @param Departamento recibe un objeto de tipo Departamento 
 	 * @return boolean retorna true si la operacion de actualizacion es exitosa.
 	 */
-	public boolean update(Departamento t) {
-		boolean result=false;
-		Connection connection= null;
-            try {
-                connection = Conexion.getConnection();
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(DepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-		String query = "update Depto set nom_depto = ? where id_depto = ?";
-		PreparedStatement preparedStmt=null;
-		try {
-		    preparedStmt = connection.prepareStatement(query);
-		    preparedStmt.setString(1, t.getNom_departamento());
-                    preparedStmt.setInt   (2, t.getId_departamento());
-		    if (preparedStmt.executeUpdate() > 0){
-		    	result=true;
-		    }
-			    
-		} catch (SQLException e) {
-				e.printStackTrace();
-		}
-			
-		return result;
-	}
-
-	/**
-	 * Funcion que permite realizar la eliminario de registro en la tabla Departamento
-	 * @param Departamento recibe un objeto de tipo Departamento 
-	 * @return boolean retorna true si la operacion de borrado es exitosa.
-	 */
-	public boolean delete(Departamento t) {
-	   boolean result=false;
-	   Connection connection = null;
-            try {
-                connection = Conexion.getConnection();
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(DepartamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-	   String query = "delete from Depto where id_depto = ?";
-	   PreparedStatement preparedStmt=null;
-	   try {
-		     preparedStmt = connection.prepareStatement(query);
-		     preparedStmt.setInt(1, t.getId_departamento());
-		    result= preparedStmt.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	   
-	   return result;
-	}
+	 
 }
