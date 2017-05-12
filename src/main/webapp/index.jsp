@@ -27,17 +27,6 @@
         </form>
      </div>
  
-    <%
-       if( request.getAttribute("artista")!=null){
-          List<Artista> artista  = (List<Artista>)request.getAttribute("artista");
-           for (Artista artista : artista) {
-         %>      
-         <h1> <%=artista.getNombre()%> </h1><br/> 
-         <%      
-          }
-       }
-      
-    
-    %>
+   
 </body>
 </html>
